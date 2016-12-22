@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,14 +12,9 @@ namespace AlgorithmicToolbox
         static void Main(string[] args)
         {
             var input = Console.ReadLine();
-            //var n = Int32.Parse(input);
-
             var _args = input.Split(' ').Select(x => Int64.Parse(x)).ToArray();
 
-            Console.WriteLine(Lib.HugeFibModulo(_args[0], (int)_args[1]));
-
-
-            Console.ReadLine();
+            Console.WriteLine(Lib.FibSumLast(_args[0]));
         }
     }
 
@@ -111,6 +107,19 @@ namespace AlgorithmicToolbox
             }
 
             return (pp_m + p_m) % m;
+        }
+
+        public static long FibSumLast(long n)
+        {
+            int sum = 0;
+            var y = n % 60;
+
+            for (int i = 0; i <= y; i++)
+            {
+                sum += (int)HugeFibModulo(i, 10);
+            }
+
+            return sum % 10;
         }
     }
 }

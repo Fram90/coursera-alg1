@@ -87,48 +87,30 @@ namespace AlgorithmicToolbox
                 return (int)n;
             }
 
-            var prev1 = 0L;
-            var prev2 = 1L;
-            var curr = 0L;
+            var p_prev = 0L;
+            var prev = 1L;
+            var pp_m = 0L;
+            var p_m = 0L;
 
-            for (long i = 2; i < n; i++)
+            for (long i = 2; i <= n; i++)
             {
-                var p1 = prev1 % m;
-                var p2 = prev2 % m;
-                curr = p1 + p2;
+                pp_m = p_prev % m;
+                p_m = prev % m;
 
-                var temp = prev2;
-                prev1 = temp;
-                prev2 = curr;
+                var curr = pp_m + p_m;
 
-                if (i > 2 && p1 == 0 && p2 == 1)
+                var temp = prev;
+                p_prev = temp;
+                prev = curr;
+
+                if (i > 2 && pp_m == 0 && p_m == 1)
                 {
-                    var x = n % (i - 1);
-                    return FibMod((int)x, m);
+                    var x = n % (i - 2);
+                    return HugeFibModulo(x, m);
                 }
             }
 
-            return (prev1 + curr) % m;
-        }
-
-        private static long FibMod(int n, int m)
-        {
-            if (n <= 1)
-            {
-                return n;
-            }
-
-            long[] result = new long[n];
-
-            result[0] = 0;
-            result[1] = 1;
-
-            for (int i = 2; i < n; i++)
-            {
-                result[i] = (result[i - 2] + result[i - 1]) % m;
-            }
-
-            return result[n - 1];
+            return (pp_m + p_m) % m;
         }
     }
 }

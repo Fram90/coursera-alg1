@@ -14,7 +14,8 @@ namespace AlgorithmicToolbox
             var input = Console.ReadLine();
             var _args = input.Split(' ').Select(x => Int64.Parse(x)).ToArray();
 
-            Console.WriteLine(Lib.FibSumLast(_args[0]));
+            Console.WriteLine(Lib.PartialFibSumLast(_args[0], _args[1]));
+            Console.ReadLine();
         }
     }
 
@@ -120,6 +121,17 @@ namespace AlgorithmicToolbox
             }
 
             return sum % 10;
+        }
+
+        public static int PartialFibSumLast(long m, long n)
+        {
+            if (n == m)
+            {
+                return (int)HugeFibModulo(n % 60, 10);
+            }
+
+            var sum = (int)FibSumLast(n % 60) - (int)FibSumLast(m - 1) + 10;
+            return Math.Abs(sum % 10);
         }
     }
 }

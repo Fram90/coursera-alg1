@@ -10,7 +10,7 @@ namespace AlgorithmicToolbox
             var input = Console.ReadLine();
             var _args = input.Split(' ').Select(x => Int32.Parse(x)).ToArray();
 
-            Console.WriteLine(Lib.LootBag(_args[0], _args[1]));
+            Console.WriteLine(Lib.MaximizingAds(_args[0]));
             Console.ReadLine();
         }
     }
@@ -77,5 +77,44 @@ namespace AlgorithmicToolbox
 
             return V;
         }
+
+        public static long MaximizingAds(int n)
+        {
+            int[] v = ImportAdsData(n);
+            int[] w = ImportAdsData(n);
+
+            long sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum += (long)v[i] * w[i];
+            }
+
+            return sum;
+        }
+
+        private static int[] ImportAdsData(int n)
+        {
+            var input = Console.ReadLine();
+            var args = input.Split(' ').Select(x => int.Parse(x)).ToArray();
+            int[] array = new int[n];
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                int j;
+                for (j = 0; j < i; j++)
+                {
+                    if (args[i] > array[j])
+                    {
+                        Array.Copy(array, j, array, j + 1, n - j - 1);
+                        break;
+                    }
+                }
+
+                array[j] = args[i];
+            }
+            return array;
+        }
+
+        //public static 
     }
 }

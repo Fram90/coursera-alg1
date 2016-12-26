@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgorithmicToolbox
@@ -10,7 +11,10 @@ namespace AlgorithmicToolbox
             var input = Console.ReadLine();
             var _args = input.Split(' ').Select(x => Int32.Parse(x)).ToArray();
 
-            Console.WriteLine(Lib.MaximizingAds(_args[0]));
+            //Console.WriteLine(Lib.CollectingSignatures(_args[0]));
+
+            Lib.CollectingSignatures(_args[0]);
+
             Console.ReadLine();
         }
     }
@@ -115,6 +119,39 @@ namespace AlgorithmicToolbox
             return array;
         }
 
-        //public static 
+        public static void CollectingSignatures(int n)
+        {
+            var pairs = new List<int[]>();
+            for (int i = 0; i < n; i++)
+            {
+                var input = Console.ReadLine();
+                var args = input.Split(' ').Select(x => int.Parse(x)).ToArray();
+
+                pairs.Add(args);
+            }
+
+            int resCount = 0;
+            var resPoints = new List<int>();
+
+            while (pairs.Count > 0)
+            {
+                var min = pairs.Min(x => x[1]);
+                resPoints.Add(min);
+
+                for (int i = 0; i < pairs.Count; i++)
+                {
+                    if (pairs[i][0] <= min)
+                    {
+                        pairs.RemoveAt(i--);
+                    }
+                }
+
+                resCount++;
+            }
+
+            Console.WriteLine(resCount);
+            Console.WriteLine(String.Join(" ", resPoints));
+
+        }
     }
 }

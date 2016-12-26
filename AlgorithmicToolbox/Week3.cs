@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace AlgorithmicToolbox
 {
@@ -158,6 +159,36 @@ namespace AlgorithmicToolbox
 
             Console.WriteLine(result.Count);
             Console.WriteLine(String.Join(" ", result));
+        }
+
+        public static void LargestNumber(int n, List<int> numbers)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            while (numbers.Count > 0)
+            {
+                int? max = null;
+
+                foreach (int number in numbers)
+                {
+                    if (IsGreaterOrEqual(number, max) || numbers.Count == 1)
+                    {
+                        max = number;
+                    }
+                }
+                sb.Append(max);
+                numbers.Remove(max.Value);
+            }
+
+            Console.WriteLine(sb.ToString());
+        }
+
+        private static bool IsGreaterOrEqual(int a, int? b)
+        {
+            var astr = a.ToString() + b;
+            var bstr = b.ToString() + a;
+
+            return int.Parse(astr) >= int.Parse(bstr);
         }
     }
 }

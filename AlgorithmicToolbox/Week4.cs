@@ -93,5 +93,69 @@ namespace AlgorithmicToolbox
             foo = bar;
             bar = tmp;
         }
+
+        static int[] MergeSort(int[] a, ref long inversions)
+        {
+            if (a.Length <= 1)
+            {
+                return a;
+            }
+            int mid = a.Length / 2;
+
+            int[] l1 = new int[mid];
+            int[] l2 = new int[a.Length - mid];
+
+            Array.Copy(a, 0, l1, 0, mid);
+            Array.Copy(a, mid, l2, 0, l2.Length);
+
+            l1 = MergeSort(l1, ref inversions);
+            l2 = MergeSort(l2, ref inversions);
+
+
+            return Merge(l1, l2, ref inversions);
+        }
+
+        static int[] Merge(int[] a, int[] b, ref long pairs)
+        {
+            var aLen = a.Length;
+            var bLen = b.Length;
+            int i = 0;
+            int j = 0;
+
+            int[] c = new int[aLen + bLen];
+
+            int k = 0;
+            while (i < aLen && j < bLen)
+            {
+                if (a[i] <= b[j])
+                {
+                    c[k] = a[i];
+                    i++;
+                }
+                else
+                {
+                    c[k] = b[j];
+                    pairs++;
+                    j++;
+                }
+                k++;
+            }
+
+            while (i < aLen)
+            {
+                c[k] = a[i];
+                i++;
+                k++;
+            }
+
+            while (j < bLen)
+            {
+                c[k] = b[j];
+                j++;
+                k++;
+            }
+
+            return c;
+        }
     }
 }

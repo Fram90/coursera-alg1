@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AlgorithmicToolbox
 {
@@ -156,6 +157,59 @@ namespace AlgorithmicToolbox
             }
 
             return c;
+        }
+
+        //public static int[] Majority(int[] array)
+        //{
+        //    if (array.Length == 1)
+        //    {
+        //        return array;
+        //    }
+
+        //    var mid = array.Length / 2;
+        //    var left = new int[mid];
+        //    var right = new int[array.Length - mid];
+        //    Array.Copy(array, 0, left, 0, mid);
+        //    Array.Copy(array, mid, right, 0, array.Length - mid);
+
+        //    var l = Majority(left);
+        //    var r = Majority(right);
+
+        //    if (l == -1 && r == -1) return -1;
+        //    if (l == -1 && r != -1) 
+
+        //    return -1;
+        //}
+
+        //private static int FindMajor(int[] a, int left, int right)
+        //{
+        //    return 0;
+        //}
+
+        public static int[] Lottery(List<Tuple<int, int>> segments, int[] points)
+        {
+            var sortedS = segments.OrderBy(x => x.Item1).ToList();
+
+            var line = new OffsetArray(sortedS[0].Item1, sortedS.Last().Item2);
+
+            return new int[2];
+
+        }
+
+        private class OffsetArray
+        {
+            private long _size;
+            private int _offset;
+            private int[] Array;
+
+            public OffsetArray(int left, int right)
+            {
+                _size = Math.Abs(left) + Math.Abs(right);
+                _offset = Math.Abs(left);
+                Array = new int[_size];
+            }
+
+            public int this[int index] => Array[index + _offset];
         }
     }
 }

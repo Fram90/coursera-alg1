@@ -159,40 +159,45 @@ namespace AlgorithmicToolbox
             return c;
         }
 
-        //public static int[] Majority(int[] array)
-        //{
-        //    if (array.Length == 1)
-        //    {
-        //        return array;
-        //    }
-
-        //    var mid = array.Length / 2;
-        //    var left = new int[mid];
-        //    var right = new int[array.Length - mid];
-        //    Array.Copy(array, 0, left, 0, mid);
-        //    Array.Copy(array, mid, right, 0, array.Length - mid);
-
-        //    var l = Majority(left);
-        //    var r = Majority(right);
-
-        //    if (l == -1 && r == -1) return -1;
-        //    if (l == -1 && r != -1) 
-
-        //    return -1;
-        //}
-
-        //private static int FindMajor(int[] a, int left, int right)
-        //{
-        //    return 0;
-        //}
-
-        public static int[] Lottery(List<Tuple<int, int>> segments, int[] points)
+        public static int Majority(int[] array)
         {
-            var sortedS = segments.OrderBy(x => x.Item1).ToList();
+            if (array.Length == 1)
+            {
+                return array[0];
+            }
 
-            var line = new OffsetArray(sortedS[0].Item1, sortedS.Last().Item2);
+            var mid = array.Length / 2;
+            var left = new int[mid];
+            var right = new int[array.Length - mid];
+            Array.Copy(array, 0, left, 0, mid);
+            Array.Copy(array, mid, right, 0, array.Length - mid);
 
-            return new int[2];
+            var l = Majority(left);
+            var r = Majority(right);
+
+            if (l == r) return l;
+
+            var lcount = array.Count(x => x == l);
+            var rcount = array.Count(x => x == r);
+
+            if (lcount > mid) return l;
+            if (rcount > mid) return r;
+
+            return -1;
+        }
+
+        public static int[] Lottery(List<int[]> segments, int[] points)
+        {
+            var sortedS = segments.OrderBy(x => x[0]).ThenBy(x => x[1]).ToList();
+
+            var result = new List<int>();
+            foreach (var point in points)
+            {
+                var s = sortedS.Count(x => x[0] >= point && x[1] <= point);
+                result.Add(s);
+            }
+            
+            return result.ToArray();
 
         }
 
@@ -209,7 +214,11 @@ namespace AlgorithmicToolbox
                 Array = new int[_size];
             }
 
-            public int this[int index] => Array[index + _offset];
+            public int this[int index]
+            {
+                get { return Array[index + _offset]; }
+                set { Array[index + _offset] = value; }
+            }
         }
     }
 }
